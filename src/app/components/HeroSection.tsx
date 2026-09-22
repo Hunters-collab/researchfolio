@@ -43,7 +43,7 @@ export default function HeroSection() {
 
           {/* Main headline */}
           <h1 className="clip-in-delay-1 text-hero font-extrabold text-foreground leading-none tracking-tight mb-6">
-            hunters
+            Hunters
           </h1>
 
           {/* Sub-title */}
