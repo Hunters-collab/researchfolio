@@ -3,7 +3,7 @@ import { imageHosts } from './image-hosts.config.mjs';
 const isProd = process.env.NODE_ENV === 'production';
 const repoName = 'researchfolio';
 
-/** @type {import('next').NextConfig} */
+/* @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   basePath: isProd ? `/${repoName}` : '',
