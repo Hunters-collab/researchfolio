@@ -12,6 +12,8 @@ interface AppLogoProps {
   onClick?: () => void; // Click handler
 }
 
+const basePath = process.env.NODE_ENV === 'production' ? '/researchfolio' : '';
+
 const AppLogo = memo(function AppLogo({
   src = '/assets/images/app_logo.png',
   iconName = 'SparklesIcon',
@@ -19,6 +21,16 @@ const AppLogo = memo(function AppLogo({
   className = '',
   onClick,
 }: AppLogoProps) {
+  // ضبط المسار تلقائياً ليتوافق مع GitHub Pages
+  const resolvedSrc = useMemo(() => {
+    if (!src) return src;
+    if (src.startsWith('http') || src.startsWith('data:')) return src;
+    if (basePath && !src.startsWith(basePath)) {
+      return `${basePath}${src.startsWith('/') ? '' : '/'}${src}`;
+    }
+    return src;
+  }, [src]);
+
   // Memoize className calculation
   const containerClassName = useMemo(() => {
     const classes = ['flex items-center'];
@@ -30,15 +42,15 @@ const AppLogo = memo(function AppLogo({
   return (
     <div className={containerClassName} onClick={onClick}>
       {/* Show image if src provided, otherwise show icon */}
-      {src ? (
+      {resolvedSrc ? (
         <AppImage
-          src={src}
-          alt="Logo" 
+          src={resolvedSrc}
+          alt="Logo"
           width={size}
           height={size}
           className="flex-shrink-0"
           priority={true}
-          unoptimized={src.endsWith('.svg')}
+          unoptimized={true}
         />
       ) : (
         <AppIcon name={iconName} size={size} className="flex-shrink-0" />
